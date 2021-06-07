@@ -1,22 +1,22 @@
 {
-  "name": "hfs__",
+  "name": "lms__",
   "version": "1.0.0",
-  "description": "HTTP File Server.",
+  "description": "Local Media Server.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andre-morales/hfs.git"
+    "url": "git+https://github.com/andre-morales/lms.git"
   },
   "author": "andre-morales",
   "license": "UNLICENSED",
   "private": true,
   "bugs": {
-    "url": "https://github.com/andre-morales/hfs/issues"
+    "url": "https://github.com/andre-morales/lms/issues"
   },
-  "homepage": "https://github.com/andre-morales/hfs#readme",
+  "homepage": "https://github.com/andre-morales/lms#readme",
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",

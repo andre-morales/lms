@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION_STR = "Alpha 1.4.0";
+const VERSION_STR = "Alpha 1.4.1";
 
 // Imports
 const Path = require('path');
@@ -19,7 +19,7 @@ var config;
 
 function init(main_){
 	main = main_;
-	console.log("--+-- HFS v" + VERSION_STR + " --+--");
+	console.log("--+-- LMS v" + VERSION_STR + " --+--");
 	app = Express();
 	app.set('view engine', 'ejs');
 	app.set('views', './views');
@@ -66,6 +66,8 @@ function shutdown(){
 }
 
 function parseConfigFile(path){
+	if(!FS.existsSync(path)) return;
+	
 	var contents = FS.readFileSync(path, 'utf8');
 	var lines = contents.split("\n");
 	var group = "GLOBAL";

@@ -1,5 +1,5 @@
-__test__
 node_modules/
 cert/
+lms_test/
 config.private.cnf
 package-lock.json
