@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION_STR = "Alpha 1.4.1";
+const VERSION_STR = "Alpha 1.4.2";
 
 // Imports
 const Path = require('path');

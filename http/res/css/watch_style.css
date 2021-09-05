@@ -58,7 +58,7 @@ button {
 	display: block;	
 	height: 80vh;
 	width: auto;
-	background-color: gray;
+	background-color: #080808;
 }
 .video-container.fullscreen {
 	width: 100%;
