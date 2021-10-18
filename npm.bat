@@ -1,1 +1,1 @@
-call "%NODE_HOME%\npm.cmd" %*
+call "%NODE_PATH%\npm.cmd" %*

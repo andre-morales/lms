@@ -57,7 +57,7 @@
 		</label>
 	</div>
 	<form enctype="multipart/form-data" method="post" style="display: inline; border: solid 1px gray; padding: 4px;">
-		<input type="file" name="file" style="height: 2em;"/>
+		<input type="file" name="uploaded_files" style="height: 2em;" multiple/>
 		<input type="submit" name="fileSubmitForm" value="Upload" style="height: 2em;"/>
 	</form>
 	<hr/>
@@ -86,7 +86,11 @@
 			return f.endsWith('.mp4') || f.endsWith('.webm') || f.endsWith('.mkv') || f.endsWith('.3gp');
 		}
 		strIsImage = function(f){
-			return f.endsWith('.png') || f.endsWith('.jpg') || f.endsWith('.gif') || f.endsWith('.ico');
+			var exts = [".png", ".jpg", ".jpeg", ".gif", ".ico"];
+			for(var i = 0; i < exts.length; i++){
+				if (f.endsWith(exts[i])) return true;
+			}
+			return false;
 		}
 	}
 

@@ -184,11 +184,15 @@ background-clip: padding-box;
 	display: block;
 	width: 0;
 	min-width: 0;
+	border-style: none;
 	transition: width 200ms;
+	transition-delay: 1s;
 }
 .video-container .volumeslider.expanded {
-	color: red;
 	width: 10rem;
+	border-style: solid;
+	color: red;
+	transition-delay: 0s;
 }
 .video-container .tt-contextmenu {
 	display: block;

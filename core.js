@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION_STR = "Alpha 1.4.2";
+const VERSION_STR = "Alpha 1.4.3";
 
 // Imports
 const Path = require('path');
@@ -145,9 +145,17 @@ function setupHandlers(){
 			} else {
 				if(req.method == 'POST'){
 					if(req.body.fileSubmitForm){
-						if(req.files){
-							var file = req.files.file;
-							file.mv(Path.join(absoluteFile, file.name));
+						if(req.files && req.files.uploaded_files){
+							var files = [];
+							if(Array.isArray(req.files.uploaded_files)){
+								files = req.files.uploaded_files;
+							} else {
+								files = [req.files.uploaded_files];
+							}
+							for(var i = 0; i < files.length; i++){
+								var file = files[i];
+								file.mv(Path.join(absoluteFile, file.name));
+							}				
 						} else {
 							console.log("Request files = null. " + req.files);
 						}

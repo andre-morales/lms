@@ -3,3 +3,5 @@ cert/
 lms_test/
 config.private.cnf
 package-lock.json
+node.bat
+npm.bat
