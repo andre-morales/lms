@@ -8,24 +8,19 @@
 
 <%
 function genFileTableEntries(){
-	for (var i = 0; i < files.length; i++){
-		var pathName = files[i];
+	for (var i = 0; i < Files.length; i++){
+		var pathName = Files[i];
+		var iconPath = getIconImageFor(pathName, thumbnailsEnabled);
 
 		var color = (i % 2 == 1)?'color-1':'color-2';
 
 		if(pathName.endsWith('/')){
 			var folderName = pathName.slice(0, -1);
-			var pathURIName = encodeURIComponent(folderName);
-			genFileTableEntry(folderName, pathURIName + "/", 'folder', color);
+			var pathURIName = encodeURI(folderName);
+			genFileTableEntry(folderName, pathURIName + "/", iconPath, color);
 		} else {	
-			var iconName = 'file';
-			if(strIsVideo(pathName)) {
-				var iconName = 'video';
-			} else if(strIsImage(pathName)) {
-				var iconName = 'picture';
-			}
-			var pathURIName = encodeURIComponent(pathName);
-			genFileTableEntry(pathName, pathURIName, iconName, color);
+			var pathURIName = encodeURI(pathName);
+			genFileTableEntry(pathName, pathURIName, iconPath, color);
 		}
 	}
 }
@@ -40,7 +35,7 @@ function genFileTableEntry(name, path, icon, rowColor){
 			</td>
 			<td class="file-img">
 				<a href="<%-path%>">
-					<img src="/res/file_icons/<%-icon%>.gif" width="32" height="32"/>
+					<img src="<%-icon%>" width="32" height="32"/>
 				</a>
 			</td>
 			<td class="file-link">

@@ -1,1 +1,0 @@
-call "%NODE_PATH%\npm.cmd" %*

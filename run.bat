@@ -1,2 +1,1 @@
-"node.bat" main
-pause
+node bin\launcher

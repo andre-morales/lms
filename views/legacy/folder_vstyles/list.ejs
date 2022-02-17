@@ -1,0 +1,40 @@
+<table id="cls-view" cellspacing="0">
+	<%
+		genFileTableEntries();
+	%>
+</table>
+
+<%
+function genFileTableEntries(){
+	for (var i = 0; i < Files.length; i++){
+		var pathName = Files[i];
+		var iconPath = getIconImageFor(pathName, thumbnailsEnabled);
+
+		var color = (i % 2 == 1)?'#ffffff':'#cccccc';
+
+		if(pathName.endsWith('/')){
+			var folderName = pathName.slice(0, -1);
+			var pathURIName = encodeURI(folderName);
+			genFileTableEntry(folderName, pathURIName + "/", iconPath, color);
+		} else {	
+			var pathURIName = encodeURI(pathName);
+			genFileTableEntry(pathName, pathURIName, iconPath, color);
+		}
+	}
+}
+
+function genFileTableEntry(name, path, icon, rowColor){
+	%>
+		<tr class="file" bgcolor="<%-rowColor-%>">
+			<td class="file-img">
+				<a href="<%-path%>">
+					<img src="<%-icon%>" width="32" border="0">
+				</a>
+			</td>
+			<td class="file-link">
+				<a href="<%- `${path}?${folderStateStr}` %>"><%-name%></a>
+			</td>
+		</tr>
+	<%
+}
+%>

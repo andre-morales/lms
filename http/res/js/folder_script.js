@@ -1,6 +1,7 @@
 var contextMenuW = null;
 var contextMenu_watch = null;
 var contextMenu_edit = null;
+var contextMenu_download = null;
 
 function main(){
 	if(!IE5_OR_NEWER) return;
@@ -25,6 +26,7 @@ function main(){
 	contextMenu = document.getElementById("context-menu");
 	contextMenu_watch = document.getElementById("cm-watch");
 	contextMenu_edit = document.getElementById("cm-edit");
+	contextMenu_download = document.getElementById("cm-download");
 
 	addListener(document, 'click', function(t, event, target){
 		if(contextMenuW){
@@ -37,6 +39,11 @@ function main(){
 
 function changeView(style){
 	setCookie('viewStyle', style, 365);
+	location.reload();
+}
+
+function toggleThumbnails(toggled){
+	setCookie('viewStyle_thumbs', toggled, 365);
 	location.reload();
 }
 
@@ -55,11 +62,17 @@ function openContextMenu(ctx){
 		contextMenu_watch.removeAttribute("href");
 	}
 	if(isFolder(contextMenuPath)){
-		var rc = removeClass(contextMenu, "editable");
+		removeClass(contextMenu, "editable");
 		contextMenu_edit.removeAttribute("href");
+
+		removeClass(contextMenu, "downloadable");
+		contextMenu_download.removeAttribute("href");
 	} else {
 		addClass(contextMenu, "editable");
 		contextMenu_edit.setAttribute("href", "javascript:edit();");
+
+		addClass(contextMenu, "downloadable");
+		contextMenu_download.setAttribute("href", "javascript:download();");
 	}
 }
 
@@ -82,6 +95,10 @@ function watch(){
 
 function edit(){
 	window.location.href = contextMenuPath + "?v=edit";
+}
+
+function download(){
+	window.location.href = contextMenuPath + "?v=download";
 }
 
 function delete_(){

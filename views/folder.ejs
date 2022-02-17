@@ -1,21 +1,49 @@
-<% main(); %>
+<%
+	Cookies = std.getCookieMap();
+	Files = getSortedFiles();
+	thumbnailsEnabled = Cookies["viewStyle_thumbs"] === "true";
+
+	main();
+%>
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<%- include('head.ejs'); %>
+	<%- include('#head'); %>
 	<title>LMS</title>
 	<link rel="stylesheet" href="/res/css/folder_style.css" type="text/css">
 	<script>
-		var folder = '<%- folder %>';
+		var folder = '<%- std.webPath %>';
 		function main(){}
 		function openContextMenu(){}
 	</script>
+	<style>
+		#sbs-view .file {
+			<%
+				let margin = Cookies["view-icons-margin"];
+				if(margin){
+					echo(`margin: ${margin}px;`)
+				}
+
+				let fsize = Cookies["view-icons-fontsize"];
+				if(fsize){
+					echo(`font-size: ${fsize}pt;`)
+				}
+
+				let border_alpha = Cookies["view-icons-border-alpha"];
+				if(border_alpha){
+					echo(`border-color: rgba(170, 220, 255, ${border_alpha});`)
+				}
+
+
+			%>
+		}
+	</style>
 	<script src="/res/js/folder_script.js"></script>
 </head>
 
 <body onload="main();">
-	<%- exportSelf() %>
-	<%- include ('header.ejs') %>
+	<%- include ('#header') %>
 	<table id="path-toolbar" cellspacing="0" style="width: 100%;">
 		<tbody>
 			<tr>
@@ -23,7 +51,7 @@
 				<td style="width: 100%;">
 					<h1 id="folder-path">
 						<%
-							var sp = folder.split('/');
+							var sp = std.webPath.split('/');
 							for(var i = 0; i < sp.length - 1; i++){
 								echo("<a href='" + sp.slice(0, i + 1).join("/") + "/'>" + sp[i] + "/</a>");
 							}
@@ -51,10 +79,8 @@
 			<input type="radio" id="viewstyle-icons" name="viewStyle" onclick="changeView('icons');"></input>
 			Icons view
 		</label>
-		<label>
-			<input type="radio" id="viewstyle-thumbnails" name="viewStyle" onclick="changeView('thumbnails');"></input>
-			Thumbnails view
-		</label>
+		<br/>
+		<input type="checkbox" id="viewstyle-thumbnails" name="thumbnails" <%- isChecked(Cookies["viewStyle_thumbs"]) %> onclick="toggleThumbnails(this.checked);">Enable thumbnails</input>
 	</div>
 	<form enctype="multipart/form-data" method="post" style="display: inline; border: solid 1px gray; padding: 4px;">
 		<input type="file" name="uploaded_files" style="height: 2em;" multiple/>
@@ -63,45 +89,97 @@
 	<hr/>
 	<div id="files">
 		<%
+			// Set it to list already so that if no cookie has been set, list view is used.
 			var view = 'list';
-			switch(_COOKIES.viewStyle){
-				case 'icons':      view = 'icons'; break;
-				case 'thumbnails': view = 'thumbs'; break;
+
+			switch(Cookies.viewStyle){
+				case 'icons': view = 'icons'; break;
 			}
-			echo(include('folder_' + view, exportSelf()));
+
+		%>
+		<%-
+			include('folder_vstyles/' + view, exportSelf())
 		%>
 	</div>
 	<div id="context-menu">
 		<a id="cm-close" href="javascript:cm_close();">Close</a>
 		<a id="cm-edit">Edit as Text</a>
 		<a id="cm-watch">Watch</a>
+		<a id="cm-download" href="javascript:download();">Download</a>
 		<a id="cm-delete" href="javascript:delete_();">Delete</a>
 	</div>
-	<%- include ('footer.ejs') %>
+	<%- include ('#footer') %>
 </body>
 </html>
 <%
+	function getSortedFiles(){
+		let files_list = std.getFilesIn(std.systemPath);
+
+		let files = [];
+		let folders = [];
+
+		for(let file of files_list){
+			if(file.endsWith('/')){
+				folders.push(file);
+			} else {
+				files.push(file);
+			}
+		}
+
+		return folders.concat(files);
+	}
+
 	function main(){
-		strIsVideo = function(f){
+		strIsVideo = (f) => {
 			return f.endsWith('.mp4') || f.endsWith('.webm') || f.endsWith('.mkv') || f.endsWith('.3gp');
 		}
-		strIsImage = function(f){
+		strIsImage = (f) => {
 			var exts = [".png", ".jpg", ".jpeg", ".gif", ".ico"];
 			for(var i = 0; i < exts.length; i++){
 				if (f.endsWith(exts[i])) return true;
 			}
 			return false;
 		}
+
+		getIconImageFor = (path, enableThumbs) => {
+			if(path.endsWith('/')){
+				return '/res/file_icons/folder.gif';
+			} else {	
+				var iconPath = '/res/file_icons/file.gif';
+				var pathURIName = encodeURIComponent(path);
+				
+				if(enableThumbs === true){
+					if(strIsVideo(path)) {
+						return pathURIName + "?v=thumb";
+					} else if(strIsImage(path)) {
+						return path;
+					}
+				} else {
+					if(strIsVideo(path)) {
+						return '/res/file_icons/video.gif';
+					} else if(strIsImage(path)) {
+						return '/res/file_icons/picture.gif';
+					}
+				}
+				return iconPath;
+			}
+		}
+	}
+
+	function isChecked(value){
+		if(value === true || value === "true") return "checked";
+		return "";
 	}
 
 	function echo(s){ %><%-s%><% }
 	
 	function exportSelf(){
-		var self = {};
+		var self_ = {};
 		for(var p in this){
 			if(this.hasOwnProperty(p)){
-				self[p] = this[p];
+				self_[p] = this[p];
 			}
 		}
+		return self_;
 	}
 %>

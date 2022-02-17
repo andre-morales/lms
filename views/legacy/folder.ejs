@@ -1,0 +1,119 @@
+<%
+	GET = std.getRequestMap;
+	Files = std.getFilesIn(std.systemPath);
+	
+	viewStyle_s = GET["vs"];
+	if(!viewStyle_s) viewStyle_s = "list";
+
+	thumbnailsEnabled_s = GET["th"];
+	if(!thumbnailsEnabled_s) thumbnailsEnabled_s = "0";
+
+	thumbnailsEnabled = thumbnailsEnabled_s === "1";
+
+	folderStateStr = `vs=${viewStyle_s}&th=${thumbnailsEnabled_s}`;
+
+	main();
+%>
+
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="icon" type="image/gif" sizes="32x32" href="/favicon.ico">
+	<title>LMS - Legacy</title>
+</head>
+
+<body bgcolor="#ffffff" link="#000000" vlink="#000000">
+	<%- await include ('../#header') %>
+
+	<font color="#000000" size="6">	
+		<a href="../"><img src="/res/back.gif"></a>
+		
+		<span>
+			<%
+				var sp = std.webPath.split('/');
+				for(var i = 0; i < sp.length - 1; i++){
+					echo("<a href='" + sp.slice(0, i + 1).join("/") + "/'>" + sp[i] + "/</a>");
+				}
+			%>
+		</span>	
+		
+		<a href="." class="button"><img src="/res/reload.gif"></a>
+	</font>
+
+	<br>
+	<div id="view-style">
+		<a href="?vs=list&th=<%-thumbnailsEnabled_s%>">List view</a>
+		<a href="?vs=icons&th=<%-thumbnailsEnabled_s%>">Icons view</a>
+		<br>
+		<a href="?vs=<%-viewStyle_s%>&th=<%-1 - thumbnailsEnabled_s%>">Toggle thumbnails</a>
+	</div>
+	<br>
+	<form enctype="multipart/form-data" method="post">
+		<input type="file" name="uploaded_files" multiple>
+		<input type="submit" name="fileSubmitForm" value="Upload">
+	</form>
+	<hr/>
+	<div id="files">
+		<%-
+			await include('folder_vstyles/' + viewStyle_s, exportSelf())
+		%>
+	</div>
+	<%- await include ('../#footer') %>
+</body>
+</html>
+<%
+	function main(){
+		strIsVideo = (f) => {
+			return f.endsWith('.mp4') || f.endsWith('.webm') || f.endsWith('.mkv') || f.endsWith('.3gp');
+		}
+		strIsImage = (f) => {
+			var exts = [".png", ".jpg", ".jpeg", ".gif", ".ico"];
+			for(var i = 0; i < exts.length; i++){
+				if (f.endsWith(exts[i])) return true;
+			}
+			return false;
+		}
+
+		getIconImageFor = (path, enableThumbs) => {
+			if(path.endsWith('/')){
+				return '/res/file_icons/folder.gif';
+			} else {	
+				var iconPath = '/res/file_icons/file.gif';
+				var pathURIName = encodeURIComponent(path);
+				
+				if(enableThumbs === true){
+					if(strIsVideo(path)) {
+						return pathURIName + "?v=thumb";
+					} else if(strIsImage(path)) {
+						return path;
+					}
+				} else {
+					if(strIsVideo(path)) {
+						return '/res/file_icons/video.gif';
+					} else if(strIsImage(path)) {
+						return '/res/file_icons/picture.gif';
+					}
+				}
+				return iconPath;
+			}
+		}
+	}
+
+	function isChecked(value){
+		if(value === "1") return "checked";
+		return "";
+	}
+
+	function echo(s){ %><%-s%><% }
+	
+	function exportSelf(){
+		var self_ = {};
+		for(var p in this){
+			if(this.hasOwnProperty(p)){
+				self_[p] = this[p];
+			}
+		}
+		return self_;
+	}
+%>

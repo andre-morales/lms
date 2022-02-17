@@ -1,0 +1,36 @@
+<table>
+	<td>
+		<div id="sbs-view">
+			<% await genFileTableEntries(); %>
+		</div>
+	</td>
+</table>
+<%
+
+async function genFileTableEntries(){
+	for (var i = 0; i < Files.length; i++){
+		var pathName = Files[i];
+		var iconPath = getIconImageFor(pathName, thumbnailsEnabled);
+
+		if(pathName.endsWith('/')){
+			var folderName = pathName.slice(0, -1);
+			var pathURIName = encodeURI(folderName);
+			await genFileTableEntry(folderName, pathURIName + "/", iconPath);
+		} else {	
+			var pathURIName = encodeURI(pathName);
+			await genFileTableEntry(pathName, pathURIName, iconPath);
+		}
+	}
+}
+
+async function genFileTableEntry(name, path, image){
+	%>
+		<span class="file-box file" data-path="<%-path%>">
+			<a href="<%- `${path}?${folderStateStr}` %>" class="file-img">
+				<img src="<%-image%>" width="64" border="1">
+			</a>
+			<a href="<%- `${path}?${folderStateStr}` %>" class="file-name"><%-name%></a>
+		</span>
+	<%
+}
+%>

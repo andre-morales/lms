@@ -1,0 +1,29 @@
+[GLOBAL]
+configs = config.private.cnf
+
+[recycle_bin]
+mode = recycle
+folder = trash
+recycle = extensions\recycle.exe
+
+[thumbs]
+ffmpeg = C:\Program Files\FFmpeg\bin\ffmpeg.exe
+ffprobe = C:\Program Files\FFmpeg\bin\ffprobe.exe
+c_mode = local
+f_name = .thumbs
+
+[http]
+port = 1100
+
+[http_legacy]
+port = 1150
+
+[https]
+port = 1200
+pkey = cert/dummy/dummy.key
+cert = cert/dummy/dummy.cert
+
+[folders]
+/self = .\
+/res = http\res\
+/ = home\

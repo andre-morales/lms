@@ -3,8 +3,7 @@
 
 <html lang="en">
 <head>
-
-	<%- include ('head.ejs') %>
+	<%- include ('#head') %>
 
 	<title>LMS - Control</title>
 	<link rel="stylesheet" href="/res/css/edit_style.css" type="text/css">
@@ -16,7 +15,7 @@
 	</style>
 </head>
 <body onload="main();">
-	<%- include ('header.ejs') %>
+	<%- include ('#header') %>
 	<h1>Control</h1>
 	<hr/>
 	<form enctype="multipart/form-data" action="/?v=control" method="POST">
@@ -31,7 +30,7 @@
 		<input type="submit" name="Sleep" value="Sleep"/>
 		
 	</form>
-	<%- include ('footer.ejs') %>
+	<%- include ('#footer') %>
 </body>
 </html>
 <%

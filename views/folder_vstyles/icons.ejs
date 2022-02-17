@@ -19,36 +19,30 @@
 	</td>
 </table>
 <%
-function genFileTableEntries(){
-	for (var i = 0; i < files.length; i++){
-		var pathName = files[i];
 
-		var color = (i % 2 == 1)?'color-1':'color-2';
+function genFileTableEntries(){
+	for (var i = 0; i < Files.length; i++){
+		var pathName = Files[i];
+		var iconPath = getIconImageFor(pathName, thumbnailsEnabled);
 
 		if(pathName.endsWith('/')){
 			var folderName = pathName.slice(0, -1);
-			var pathURIName = encodeURIComponent(folderName);
-			genFileTableEntry(folderName, pathURIName + "/", '/res/file_icons/folder.gif', color);
+			var pathURIName = encodeURI(folderName);
+			genFileTableEntry(folderName, pathURIName + "/", iconPath);
 		} else {	
-			var iconName = '/res/file_icons/file.gif';
-			var pathURIName = encodeURIComponent(pathName);
-			if(strIsVideo(pathName)) {
-				var iconName = pathURIName + "?v=thumb";
-			} else if(strIsImage(pathName)) {
-				var iconName = pathName;
-			}
-			genFileTableEntry(pathName, pathURIName, iconName, color);
+			var pathURIName = encodeURI(pathName);
+			genFileTableEntry(pathName, pathURIName, iconPath);
 		}
 	}
 }
 
-function genFileTableEntry(name, path, image, rowColor){
+function genFileTableEntry(name, path, image){
 	%>
 		<span class="file-box file" data-path="<%-path%>">
 			<span class="menu-wrapper">
 				<button></button>
 			</span>
-			<a href="<%-path%>" class="file-img"><img src="<%-image%>"/></a>
+			<a href="<%-path%>" class="file-img"><img src="<%-image%>" width="64"></a>
 			<a href="<%-path%>" class="file-name"><%-name%></a>
 		</span>
 	<%

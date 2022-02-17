@@ -1,9 +1,10 @@
 {
   "name": "lms__",
+  "type": "module",
   "version": "1.0.0",
   "description": "Local Media Server.",
-  "main": "main.js",
-  "scripts": {
+  "main": "bin/main.js",
+  "scripts": {"start": "node bin\/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +22,6 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
-    "sleep-mode": "^1.1.0"
+    "image-size": "^1.0.0"
   }
 }

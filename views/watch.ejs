@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<%- include ('head.ejs') %>
+	<%- include ('#head') %>
 	<title>LMS - Watch</title>
 	<link rel="stylesheet" href="/res/css/watch_style.css" type="text/css">	
 	<script src="/res/js/watch_text_track.js"></script>
@@ -18,7 +18,7 @@
 	</script>
 </head>
 <body onload="main();">
-	<%- include ('header.ejs') %>
+	<%- include ('#header') %>
 	<h1>Watch <%-videoName %></h1>
 	<figure class="video-container">
 		<div class="controls-overlay-wrapper">
@@ -231,25 +231,26 @@
 			</div>	
 		</div>
 		<video width="1920" height="1080" preload="metadata" onplay="Video.onPlay();" onpause="Video.onPause();" controls>
-			<source src="<%-_FILE%>" type="video/<%-videoExt%>">
+			<source src="<%-std.webPath%>" type="video/<%-videoExt%>">
 			<track id="t_track" class="template subtrack" kind="subtitles"></track>
 			Video is not supported on this browser.
 		</video>
 	</figure>
-	<%- include ('footer.ejs') %>
+	<%- include ('#footer') %>
 </body>
 </html>
 <%
 	function main(){
-		var si    = _FILE.lastIndexOf("/");
-		var di    = _FILE.lastIndexOf(".");
-		videoPath = _FILE.substring(0, si + 1);
-		videoName = _FILE.substring(si + 1, di);
-		videoExt  = _FILE.substring(di + 1);
+		var si    = std.webPath.lastIndexOf("/");
+		var di    = std.webPath.lastIndexOf(".");
+		videoPath = std.webPath.substring(0, si + 1);
+		videoName = std.webPath.substring(si + 1, di);
+		videoExt  = std.webPath.substring(di + 1);
+		if(videoExt = "mkv") videoExt = "webm";
 	}
 
 	function genSubtitleLoadCalls(){
-		var ittFilePath = Path.join(S.path_resolveVirtual(videoPath), videoName + '.itt');
+		var ittFilePath = Path.join(Sys.path_resolveVirtual(videoPath), videoName + '.itt');
 		if(FS.existsSync(ittFilePath)){
 			var lines = FS.readFileSync(ittFilePath, 'utf8').split("\n");
 			for(var i = 0; i < lines.length; i++){

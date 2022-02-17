@@ -1,0 +1,45 @@
+<% main(); %>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<%- include('#head') %>
+
+	<title>LMS - Settings</title>
+	<script>
+		function save(){
+			setCookie('view-icons-margin', $("#spacing").val() , 365);
+			setCookie('view-icons-border-alpha', $("#border-alpha").val() , 365);
+			setCookie('view-icons-fontsize', $("#font-size").val() , 365);
+		}
+	</script>
+	<style>
+		input[type="number"] {
+			border: solid 1px gray;
+		}
+		button {
+			padding: 6px;
+		}
+	</style>
+</head>
+<body>
+	<%- include ('#header') %>
+	<h1>Settings</h1>
+	<hr/>
+	<div>
+		<h2>Folder display options</h2>
+		<p>Spacing: <input id="spacing" type="number" value="<%- Cookies["view-icons-margin"] %>" min="0">px</p>
+		<p>Border opacity: <input id="border-alpha" type="number" value="<%- Cookies["view-icons-border-alpha"] %>" min="0" max="1" step="0.1"></p>
+		<p>Font size: <input id="font-size" type="number" value="<%- Cookies["view-icons-fontsize"] %>" min="1">pt</p>
+		<button onclick="save();"/>Save</button>
+	</div>
+	<%- include ('#footer') %>
+</body>
+</html>
+<%
+	function main(){
+		Cookies = std.getCookieMap();
+	}
+
+	function echo(s){ %><%-s%><% }
+%>

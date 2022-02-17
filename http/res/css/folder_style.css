@@ -22,7 +22,7 @@
 	color: black;
 }
 
-/* Classic view */
+/* -- Classic view -- */
 #cls-view {
 	width: 100%;
 }
@@ -42,7 +42,8 @@
 	display: block;
 	margin: 4px 4px 4px 0;
 }
-/* Side by side view */
+
+/* -- Side by side view -- */
 #sbs-view {
 	margin: -4px;
 }
@@ -57,19 +58,23 @@
 	margin: 0 4px;
 }
 #sbs-view .file {
+	position: relative;
 	flex-grow: 1;
 	display: inline-block;
 	text-align: center;
-	margin: 4px;
+	margin: 3px;
 	vertical-align: middle;
 	box-sizing: content-box;
-	border: solid 1px #D0E0FF;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #AFE;
 	box-shadow: 0 0 1px 0px #8BE;
-	font: 12pt 'Segoe UI';
+	font-family: 'Segoe UI';
+	font-size: 11pt;
 	font-weight: 300;
 }	
 #sbs-view .file:hover {
-	border: solid 1px #8BE;
+	border-color: #8BE;
 	background: #E0FFFF;
 }
 #sbs-view .file-img {
@@ -79,6 +84,7 @@
 	box-sizing: content-box;
 }
 #sbs-view .menu-wrapper {
+	position: absolute;
 	width: 32px;
 }
 #sbs-view .menu-wrapper button {
@@ -125,6 +131,7 @@
 	border: solid 1px gray;
 	text-align: center;
 	padding: 4px 16px;
+	font-size: 12pt;
 	white-space: nowrap;
 }
 #files #context-menu a:hover {
@@ -134,15 +141,14 @@
 	padding: 0;
 }
 
+#files #context-menu 		   #cm-watch {color: gray;  font-size: 0; padding: 0; border-width: 0; }
+#files #context-menu.watchable #cm-watch {color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
 
+#files #context-menu 		  #cm-edit {color: gray;  font-size: 0; padding: 0; border-width: 0; }
+#files #context-menu.editable #cm-edit {color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
 
-		   #cm-watch {color: gray;}
-.watchable #cm-watch {color: black;}
-
-		  #cm-edit {color: gray;}
-.editable #cm-edit {color: black;}
-
-
+#files #context-menu 			  #cm-download {color: gray;  font-size: 0; padding: 0; border-width: 0; }
+#files #context-menu.downloadable #cm-download {color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
 
 .color-1 {
 	background: white;

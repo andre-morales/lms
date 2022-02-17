@@ -1,8 +1,10 @@
-* { padding: 0; margin: 0; }
+* { padding: 0; margin: 0; outline: 0; border: 0;}
+
 body {
 	border: none;
 	background-color: white;
 	margin: 8px;
+	line-height: 1;
 }
 hr {
 	margin: 0.5em auto 0.5em auto;
@@ -12,6 +14,11 @@ h1 {
 	font: 21pt 'Tahoma';
 	font-weight: 100;
 	margin: 0.67em 0 0.67em 0;
+}
+h2 {
+	font: 18pt 'Tahoma';
+	font-weight: 100;
+	margin: 0.60em 0 0.60em 0;
 }
 button {
 	color: inherit;
@@ -116,7 +123,6 @@ img {
 	left: 50%;
 	background: white;
 }
-
 
 input[type=range] {
 	height: 8px;
