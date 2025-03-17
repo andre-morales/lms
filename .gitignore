@@ -1,9 +1,4 @@
 node_modules/
-cert/
-lms_test/
-config.private.cnf
-package-lock.json
-node.bat
-npm.bat
-/nbproject/private/
 thumbnails/
+cert/
+config.private.cnf
