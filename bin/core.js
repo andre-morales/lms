@@ -32,7 +32,13 @@ var httpLegacyServer;
 var httpsServer;
 var config;
 
-function init(){
+export function stub() {
+	if (process.argv.includes('--stub-run')) {
+		init();
+	}
+}
+
+export function init(){
 	console.log("--+-- LMS v" + VERSION_STR + " --+--");
 	app = Express();
 	app.set('view engine', 'ejs');
@@ -120,6 +126,7 @@ function loadConfigFile(path){
 function setupMountPointRoutes(){
 	for(const [mountPoint, mountLocation] of Object.entries(config.folders)){
 		app.use(mountPoint, async (req, res, next) => {
+			console.log(req);
 			var virtualURL = Pathex.join(mountPoint, req.url); // Virtual full URL with mount point and request string.
 			var webPath = decomposeURL(virtualURL).path;       // Virtual path with mount point.
 			var systemPath = path_resolveVirtual(webPath);     // Absolute system path.
@@ -231,7 +238,8 @@ function setupMountPointRoutes(){
 		var reqFile = decodeURI(req.url);
 		res.status(404);
 		var vars = {
-			'requestedPage': reqFile
+			'requestedPage': reqFile,
+			'VERSION': VERSION_STR
 		};
 		res.render('404.ejs', vars);
 	});
@@ -381,4 +389,4 @@ function path_resolveVirtual(path){
 	return null;
 }
 
-init();
+stub();

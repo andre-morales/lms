@@ -1,6 +1,12 @@
+// -- Self
+
+//const Main = await import('./core.js');
+//Main.init();
+
+// -- External
 import * as CProcess from 'child_process';
 
-var args = ["bin\\core.js"];
+var args = ["bin\\core.js", "--stub-run"];
 var opt = {
 	detached: true,
 	stdio: 'ignore'
