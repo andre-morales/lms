@@ -141,14 +141,14 @@
 	padding: 0;
 }
 
-#files #context-menu 		   #cm-watch {color: gray;  font-size: 0; padding: 0; border-width: 0; }
-#files #context-menu.watchable #cm-watch {color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
+#files #context-menu 		   #cm-watch {display:none;  color: gray;  font-size: 0; padding: 0; border-width: 0; }
+#files #context-menu.watchable #cm-watch {display:block; color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
 
-#files #context-menu 		  #cm-edit {color: gray;  font-size: 0; padding: 0; border-width: 0; }
-#files #context-menu.editable #cm-edit {color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
+#files #context-menu 		  #cm-edit {display:none;  color: gray;  font-size: 0; padding: 0; border-width: 0; }
+#files #context-menu.editable #cm-edit {display:block; color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
 
-#files #context-menu 			  #cm-download {color: gray;  font-size: 0; padding: 0; border-width: 0; }
-#files #context-menu.downloadable #cm-download {color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
+#files #context-menu 			  #cm-download {display:none;  color: gray;  font-size: 0; padding: 0; border-width: 0; }
+#files #context-menu.downloadable #cm-download {display:block; color: black; font-size: 12pt; padding: 4px 16px; border-width: 1px; }
 
 .color-1 {
 	background: white;
